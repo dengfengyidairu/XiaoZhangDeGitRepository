@@ -1,46 +1,69 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div>
-        <!-- <el-button @click="getMic">点击获取</el-button> -->
-        施工中...
+        <!-- <input type="text" v-model="phone">
         <br>
-        <button @click="clickFn">点击获取数据</button>
+        <input type="password" v-model="password">
+        <br>
+        <button @click="loginFn">登录</button>
+        <br>
+        <button @click="storeFn">获取登录状态</button> -->
+        
+        <button @click="butClickFn">点击显示登录框</button>
     </div>
 </template>
 
 <script>
-import { songListAPI } from '@/api/SongList/song'
+import { phoneLoginAPI, storeAPI } from '@/api/Login/index'
+// import Login from '@/views/login/Login.vue'
 export default {
-    name: 'Fm',
     data() {
         return {
-            aaa: [],
+            phone:'',
+            password:''
+            
         }
     },
-
     methods: {
-        // getMic() {
-        //     axios({
-        //         url: '/song/url?id=33894312',
-        //         method: 'GET'
-        //     })
-        //         .then(res => {
-        //             console.log("我拿到的数据：", res.data)
-        //             // this.aaa = res
-        //             // console.log(aaa[0])
-        //         })
-        //         .catch(err => {
-        //             console.log(err)
-        //         })
-        // }
-    async clickFn () {
-        const {playlists: res} = await songListAPI()
-        console.log(res)
-    }
-    }
+        butClickFn () { 
+            this.$refs.loginBtnFn.flag = true
+        },
+        async loginFn () {
+            const res = await phoneLoginAPI(this.phone, this.password)
+            console.log(res)
+        },
+        async storeFn () {
+            const res = await storeAPI()
+            console.log(res)
+        }
+    },
+    // components: {
+    //     Login
+    // }
 
 }
 
 </script>
 
 <style>
+    body {
+        width: 100%;
+        height: 100%;
+    }
+    .acc {
+        width: 200px;
+        height: 400px;
+        background-color: aqua;
+        overflow-y: scroll;
+    }
+    ::-webkit-scrollbar {
+        /*隐藏滚轮*/
+        display: none;
+    }
+    .aaa {
+        width: 200px;
+        height: 200px;
+        background-color: coral;
+        margin: 20px 0;
+    }
 </style>

@@ -1,0 +1,44 @@
+{
+  "id": "3625413",
+  "name": "music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7159312",
+      "name": "叉号",
+      "font_class": "chahao",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "7417086",
+      "name": "上一首",
+      "font_class": "shangyishou",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "7417092",
+      "name": "下一首",
+      "font_class": "xiayishou",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "7594152",
+      "name": "24gf-pause2",
+      "font_class": "24gf-pause2",
+      "unicode": "ea81",
+      "unicode_decimal": 60033
+    },
+    {
+      "icon_id": "7594157",
+      "name": "24gf-playCircle",
+      "font_class": "24gf-playCircle",
+      "unicode": "ea82",
+      "unicode_decimal": 60034
+    }
+  ]
+}

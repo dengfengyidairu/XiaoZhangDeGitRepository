@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Discover from "@/views/discover/Discover.vue";
 import Fm from "../views/Fm.vue";
 
 Vue.use(VueRouter);
@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home,
+    name: "discover",
+    component: Discover,
   },
   {
     path: "/fm",
