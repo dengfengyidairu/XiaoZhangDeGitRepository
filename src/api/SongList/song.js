@@ -49,3 +49,11 @@ export const albumAPI = () => {
   })
 }
 
+// 获取歌单详情
+export const songDetail = (id) => {
+  return myMusicRequest({
+    url: '/playlist/detail',
+    method: 'GET',
+    params: { id }
+  })
+}

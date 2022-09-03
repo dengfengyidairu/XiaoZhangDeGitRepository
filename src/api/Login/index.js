@@ -50,7 +50,7 @@ export const phoneLoginAPI = ({ phone, password }) => {
         }
     })
 }
-
+// 获取登录状态
 export const storeAPI = () => {
     return myMusicRequest({
         url: '/login/status'

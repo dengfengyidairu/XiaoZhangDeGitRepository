@@ -10,8 +10,8 @@
     <p>推荐歌单</p>
     <hr>
     <ul class="playListUl">
-      <li v-for="item in list" :key='item.id'>
-        <div class="playlist" @click="songDetailsFn">
+      <li v-for="(item,index) in list" :key='item.id'>
+        <div class="playlist" @click="songDetailsFn(list[index])">
           <span class="playAmount"><img src="@/assets/Headset-2.png">{{ parseInt(item.playCount / 10000) }}万</span>
           <img :src="item.coverImgUrl">
           <span class="title">{{ item.name }}</span>
@@ -74,7 +74,9 @@ export default {
       getRelease: [],
       rmdRadio: [],
       mvdata: [],
-      album: []
+      album: [],
+      songDetailsId: 0,
+      // songDetailData: []
     }
   },
   //生命周期函数---在实例创建完成后被立即同步调用，实例已在内存中创建好，data和methods已初始化好，此时还没开始编译模板。
@@ -118,10 +120,13 @@ export default {
       this.album = res.albums
     },
     // 点击获取歌单详情
-    songDetailsFn () {
-
-    }
+    songDetailsFn (detail) {
+      this.songDetailsId = detail.id
+      // 路由，跳转页面到歌单详情，携带query参数(歌单id)
+      this.$router.push({path:'/songDetail', query:{id:this.songDetailsId}})
+    },
   },
+  
 }
 </script>
   <style scoped>
@@ -159,7 +164,7 @@ export default {
     font-weight: 800;
     font-size: 20px;
   }
-  
+
   .playlist .playAmount img {
     width: 14px;
     height: 13px;
@@ -180,7 +185,6 @@ export default {
     display: inline-block;
     width: 140px;
     /* position: absolute; */
-    float: left;
     background-color: #000000;
     background-position: 0px -537px;
     opacity: 0.5;
