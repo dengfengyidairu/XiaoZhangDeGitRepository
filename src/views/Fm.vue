@@ -9,13 +9,14 @@
         <br>
         <button @click="storeFn">获取登录状态</button> -->
         
-        <button @click="butClickFn">点击显示登录框</button>
+        <!-- <button @click="butClickFn">点击显示登录框</button> -->
+        <button @click="testt">点击改变store数据</button>
     </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { phoneLoginAPI, storeAPI } from '@/api/Login/index'
-// import Login from '@/views/login/Login.vue'
 export default {
     data() {
         return {
@@ -35,7 +36,15 @@ export default {
         async storeFn () {
             const res = await storeAPI()
             console.log(res)
+        },
+        ...mapMutations({tests:'test'}),
+        testt () {
+            console.log(this.$store.state.slideshow)
+            // this.$store.commit('test',12121)
+            this.tests(111)
+            console.log(this.$store.state.slideshow)
         }
+
     },
     // components: {
     //     Login

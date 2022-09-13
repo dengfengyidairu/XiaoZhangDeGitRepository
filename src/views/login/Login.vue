@@ -17,7 +17,7 @@
             <el-button type="primary" class="btn-login" @click="loginFn">登录</el-button>
           </el-form-item>
         </el-form>
-        <span @click="chaFn"><i class="iconfont">&#xe60e;</i></span>
+        <span @click="chaFn"><i class="iconfont icon-chahao"></i></span>
       </div>
     </div>
   </div>

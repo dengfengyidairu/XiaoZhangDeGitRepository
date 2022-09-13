@@ -5,6 +5,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/icon/iconfont.css'
 import moment from "moment"
+import store from '@/store/index.js'
 
 // 定义时间格式化全局过滤器
 Vue.filter('dateFormat',(dateStr,pattern = 'YYYY-MM-DD ') =>{
@@ -17,6 +18,7 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
 

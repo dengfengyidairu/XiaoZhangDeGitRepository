@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3625413 */
-  src: url('iconfont.woff2?t=1662087707193') format('woff2'),
-       url('iconfont.woff?t=1662087707193') format('woff'),
-       url('iconfont.ttf?t=1662087707193') format('truetype');
+  src: url('iconfont.woff2?t=1663071996217') format('woff2'),
+       url('iconfont.woff?t=1663071996217') format('woff'),
+       url('iconfont.ttf?t=1663071996217') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,54 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-cibiaoquanyi:before {
+  content: "\e671";
+}
+
+.icon-danlieliebiao:before {
+  content: "\e6e4";
+}
+
+.icon-liebiaoxunhuan:before {
+  content: "\e609";
+}
+
+.icon-shuzishunxu:before {
+  content: "\e7de";
+}
+
+.icon-suiji:before {
+  content: "\e71f";
+}
+
+.icon-hanhan-01-01:before {
+  content: "\e6ae";
+}
+
+.icon-xiazai:before {
+  content: "\e60d";
+}
+
+.icon-xihuan:before {
+  content: "\e761";
+}
+
+.icon-shangjiantou:before {
+  content: "\e600";
+}
+
+.icon-xiajiantou:before {
+  content: "\e601";
+}
+
+.icon-bofang:before {
+  content: "\e87c";
+}
+
+.icon-jiahao:before {
+  content: "\eaf3";
 }
 
 .icon-chahao:before {

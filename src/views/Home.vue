@@ -7,21 +7,35 @@
         <span @click="loginClickFn">未登录</span>
       </div>
     </div>
-    <nav ref="navref" @click="getyuansu($event)">
-      <router-link :class="aaa == '#/' ? 'choice' : ''" to="/">发现音乐</router-link>
-      <router-link :class="aaa == '#/fm' ? 'choice' : ''" to="/fm">私人FM</router-link>
+    <!-- @click="getyuansu($event)" -->
+    <nav ref="navref">
+      <!-- :class="aaa == '#/' ? 'choice' : ''"  :class="aaa == '#/fm' ? 'choice' : ''"  -->
+      <router-link to="/">发现音乐</router-link>
+      <router-link to="/fm">私人FM</router-link>
     </nav>
     <div class="view">
       <router-view />
     </div>
-    <!-- <div class="footer"> -->
-      <!-- <span class="bofangqi">
-        <img src="@/assets/上一首.png">
-        <img ref="zantin" src="@/assets/暂停.jpg">
-        <img src="@/assets/下一首.png"></span> -->
-    <!-- </div> -->
     <!-- 登录组件 -->
     <Login ref="loginBtnFn"></Login>
+    <!-- 底部播放栏 -->
+    <div class="playHurdle">
+      <span class="playHurdle_left">
+        <img src="https://p1.music.126.net/mn87wsSRthixX1js26p6aQ==/109951167796790770.jpg" alt="">  
+        <div class="playHurdle_left_right">
+          <span>歌名歌名歌名<i class="iconfont icon-xihuan"></i></span>
+          <div>房东的猫</div>
+        </div>
+      </span>
+      <div class="playHurdle_centre">
+        <div>
+          <i class="iconfont icon-shuzishunxu"></i>
+          <i class="iconfont icon-shangyishou"></i>
+          <span class="yuan"><i class="iconfont icon-bofang"></i></span>
+          <i class="iconfont icon-xiayishou"></i>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,24 +49,21 @@ export default {
   },
   methods: {
     // 判定hash确实是否点击
-    getyuansu(e) {
-      this.aaa = e.target.hash
-    },
+    // getyuansu(e) {
+    //   this.aaa = e.target.hash
+    // },
     // 点击未登录登录显示登录组件
     loginClickFn () {
       this.$refs.loginBtnFn.flag = true
     }
   },
-  // mounted () {
-  //   this.fxClickFn()
-  // }
   components: {
     Login
   }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 #app {
   width: 1260px;
   height: 640px;
@@ -65,7 +76,7 @@ input:focus{
 
 nav a {
   display: block;
-  width: 200px;
+  width: 185px;
   height: 40px;
   /* background-color: pink; */
   line-height: 40px;
@@ -75,9 +86,9 @@ nav a {
   padding-left: 15px;
 }
 
-.choice {
+/* .choice {
   background-color: rgb(199, 195, 199);
-}
+} */
 
 .default {
   background-color: rgb(199, 195, 199);
@@ -99,7 +110,7 @@ a:hover {
 .top {
   width: 100%;
   height: 60px;
-  background-color: #c62f2f;
+  background-color: #ec4141;
 }
 
 .top input {
@@ -107,8 +118,8 @@ a:hover {
   height: 30px;
   border: none;
   border-radius: 30px;
-  background-color: #a82828;
-  color: #c67171;
+  background-color: #e82929;
+  -webkit-text-fill-color: rgb(180, 177, 177);
   margin-left: 13%;
 }
 
@@ -161,4 +172,52 @@ nav {
 .bofangqi {
   margin-left: 40%;
 }
+
+.playHurdle {
+  position: fixed;
+  width: 1260px;
+  height: 54px;
+  background-color: #ffffff;
+  bottom: 0px;
+  border-top: 1px solid #f6f1f1;
+  display: flex;
+}
+
+.playHurdle_left {
+  display: flex;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 3px;
+      margin: 0 6px 0 0;
+  }
+  .playHurdle_left_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 14px;
+  }
+  i {
+    margin: 0 0 0 6px;
+  }
+}
+
+.playHurdle_centre {
+  position: relative;
+  left: 50%;
+  width: 200px;
+  height: 500px;
+  .yuan {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #a75858;
+    border-radius: 50%;
+  }
+  i {
+    font-size: 22px;
+    margin: 0 10px;
+  }
+}
+
 </style>

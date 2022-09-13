@@ -57,3 +57,21 @@ export const songDetail = (id) => {
     params: { id }
   })
 }
+
+// 获取歌单所有歌曲
+export const allSongAPI = (id) => {
+  return myMusicRequest({
+    url: '/playlist/track/all',
+    method: 'GET',
+    params: { id }
+  })
+}
+
+// 获取歌曲URL
+export const songUrlAPI = (id) => {
+  return myMusicRequest({
+    url: '/song/url',
+    method: 'GET',
+    params: { id }
+  })
+}
