@@ -45,11 +45,11 @@
                     <th class="tab_album">专辑</th>
                     <th class="tab_time">时间</th>
                 </tr>
-                <tr class="datail_msg" v-for="(item, index) in $store.state.songMsg" :key="item.id">
+                <tr class="datail_msg" v-for="(item, index) in $store.state.songMsg" :key="item.id" @dblclick="playSongFn(item.id,index)">
                     <td class="tab_optl">{{index+1}}<i class="iconfont icon-xiazai"></i><i class="iconfont icon-xihuan"></i></td>
                     <td class="tab_titlel"><span>{{item.name}}</span></td>
-                    <td class="tab_singerl"><span v-for="singer in item.ar.slice(0,3)" :key="singer.id">{{singer.name}}</span></td>
-                    <td class="tab_albuml"><span>{{item.al.name}}</span></td>
+                    <td class="tab_singerl"><span v-for="singer in item.ar.slice(0,3)" :key="singer.id" :title="singer.name">{{singer.name}}</span></td>
+                    <td class="tab_albuml"><span :title="item.al.name">{{item.al.name}}</span></td>
                     <td class="tab_timel" >暂无数据</td>
                 </tr>
             </table>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
     data() {
         return {
@@ -67,7 +67,16 @@ export default {
     },
     methods: {
         // 映射
-        ...mapActions(['getSongDetailss','getSongMsg']),
+        ...mapMutations(['alterMusicMsg']),
+        ...mapActions(['getSongDetailss', 'getSongMsg','getSongUrl']),
+        // 双击播放歌曲
+        playSongFn (id, index) {
+            // console.log(id)
+            this.getSongUrl(id)
+            this.$bus.$emit('playBus')
+            this.alterMusicMsg(this.$store.state.songMsg[index])
+            // console.log(this.$store.state.songMsg[index])
+        }
     },
     created() {
         this.getSongDetailss(this.$route.query.id)
@@ -263,7 +272,7 @@ export default {
 .songMsg .operate_title {
     display: inline-block;
     border-spacing: 0;
-    margin-bottom: 100px;
+    margin-bottom: 110px;
 }
 
 .songMsg .operate_title td {
@@ -316,7 +325,7 @@ export default {
 }
 
 .songMsg .operate_title .tab_titlel {
-    width: 340px;
+    width: 280px;
     height: 30px;
 
     span {
@@ -329,15 +338,15 @@ export default {
 }
 
 .songMsg .operate_title .tab_singerl {
-    width: 160px;
+    width: 220px;
     height: 30px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
     span {
+        width: 57px;
         display: inline-block;
-        margin-left: 5px;
+        margin-left: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     span:hover {

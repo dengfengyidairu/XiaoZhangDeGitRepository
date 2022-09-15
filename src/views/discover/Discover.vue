@@ -231,7 +231,7 @@ p {
 }
 
 .album {
-  margin-left: 30px;
+  margin:0 0 70px 30px;
 }
 
 .album li {

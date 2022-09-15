@@ -73,17 +73,15 @@ export default {
 
 <style scoped>
 .bg {
-  width: 1259px;
-  height: 640px;
+  width: 1260px;
+  height: 100%;
   background-color: rgb(0, 0, 0, 0.4);
   background-position: 0px -537px;
-  position: fixed;
-  top: 68px;
-  left: 82px;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .biox {

@@ -9,9 +9,17 @@
     </div>
     <!-- @click="getyuansu($event)" -->
     <nav ref="navref">
-      <!-- :class="aaa == '#/' ? 'choice' : ''"  :class="aaa == '#/fm' ? 'choice' : ''"  -->
       <router-link to="/">发现音乐</router-link>
+      <router-link to="/blogs">博客</router-link>
+      <router-link to="/video">视频</router-link>
+      <router-link to="/attention">关注</router-link>
+      <router-link to="/liveStreaming">直播</router-link>
       <router-link to="/fm">私人FM</router-link>
+      <span>我的音乐</span>
+      <router-link to="/loveMusic" tag="div"> <i class="iconfont icon-xihuan"></i> 我喜欢的音乐</router-link>
+      <router-link to="/recentPlay" tag="div"> <i class="iconfont icon-zuijinchangyong"></i> 最近播放</router-link>
+      <router-link to="/myCollect" tag="div"> <i class="iconfont icon-wodeshoucang"></i> 我的收藏</router-link>
+      <span>创建的歌单<i class="iconfont icon-jiahao"></i></span>
     </nav>
     <div class="view">
       <router-view />
@@ -21,30 +29,39 @@
     <!-- 底部播放栏 -->
     <div class="playHurdle">
       <span class="playHurdle_left">
-        <img src="https://p1.music.126.net/mn87wsSRthixX1js26p6aQ==/109951167796790770.jpg" alt="">  
+        <img :src="$store.state.musicMsg.al.picUrl">
         <div class="playHurdle_left_right">
-          <span>歌名歌名歌名<i class="iconfont icon-xihuan"></i></span>
-          <div>房东的猫</div>
+          <span>{{ $store.state.musicMsg.name }}<i class="iconfont icon-xihuan"></i></span>
+          <div :title="$store.state.musicMsg.ar[0].name">{{ $store.state.musicMsg.ar[0].name}}</div>
         </div>
       </span>
       <div class="playHurdle_centre">
-        <div>
+        <div class="optIcon">
           <i class="iconfont icon-shuzishunxu"></i>
           <i class="iconfont icon-shangyishou"></i>
-          <span class="yuan"><i class="iconfont icon-bofang"></i></span>
+          <i @click="playCliclFn" :class=" flag ?  'iconfont icon-bofang' : 'iconfont icon-24gf-pause2' "></i>
           <i class="iconfont icon-xiayishou"></i>
         </div>
+        <div class="progressBar"></div>
+      </div>
+      <!-- 进度条 -->
+      <div class="playHurdle_right">
+        <span><i class="iconfont icon-danlieliebiao"></i></span>
       </div>
     </div>
+    <audio ref="audioRef" :src="this.$store.state.songUrl">
+      <!-- <source src="http://music.163.com/song/media/outer/url?id=5274293.mp3"> -->
+      所在浏览器暂不支持 audio !
+    </audio>
   </div>
 </template>
 
 <script>
-  import Login from '@/views/login/Login.vue'
+import Login from '@/views/login/Login.vue'
 export default {
   data() {
     return {
-      aaa: ''
+      flag: true
     }
   },
   methods: {
@@ -53,49 +70,61 @@ export default {
     //   this.aaa = e.target.hash
     // },
     // 点击未登录登录显示登录组件
-    loginClickFn () {
+    loginClickFn() {
       this.$refs.loginBtnFn.flag = true
+    },
+    // 点击播放按钮触发事件  切换图标 播放/暂停音乐
+    playCliclFn() {
+      this.flag = !this.flag
+      if ( this.flag) {
+        this.$refs.audioRef.pause();
+      } else {
+        this.$refs.audioRef.play();
+      } 
+    },
+    // 播放事件
+    playFn () {
+      this.flag = false;
+      try {
+        this.$refs.audioRef.play();
+      } catch (error) {
+        console.log(error)
+      }
+      
     }
   },
   components: {
     Login
-  }
+  },
+  mounted(){
+          // 绑定事件
+          this.$bus.$on('playBus', ()=>{
+            setTimeout (()=>{
+              this.playFn()
+              console.log(this.$store.state.musicMsg)
+            },500)
+          })
+        },
 }
 </script>
 
 <style lang="less" scoped>
 #app {
   width: 1260px;
-  height: 640px;
+  height: 705px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
-input:focus{
-    outline: none;
+input:focus {
+  outline: none;
 }
-
-nav a {
-  display: block;
-  width: 185px;
-  height: 40px;
-  /* background-color: pink; */
-  line-height: 40px;
-  text-decoration: none;
-  color: #0f0f0f;
-  margin: 5px 0;
-  padding-left: 15px;
-}
-
-/* .choice {
-  background-color: rgb(199, 195, 199);
-} */
 
 .default {
   background-color: rgb(199, 195, 199);
 }
 
 a:hover {
-  /* border-left: 5px solid #cc4e4e; */
   background-color: rgb(199, 195, 199);
 }
 
@@ -104,7 +133,6 @@ a:hover {
   float: right;
   width: 1000px;
   height: 100%;
-  /* background-color: aqua; */
 }
 
 .top {
@@ -142,7 +170,51 @@ a:hover {
 nav {
   position: absolute;
   border-right: 0.5px solid #e0dfdf;
-  height: 620px;
+  height: 638px;
+    a {
+    display: block;
+    width: 185px;
+    height: 50px;
+    line-height: 50px;
+    text-decoration: none;
+    color: #565555;
+    margin: 5px 0;
+    padding-left: 15px;
+    font-size: 18px;
+  }
+  span {
+    margin: 10px 0;
+    display: inline-block;
+    width: 200px;
+    height: 20px;
+    font-size: 14px;
+    color: #afacac;
+    background-color: #fafafa;
+    padding-left: 15px;
+    i {
+      margin: 0 0 0 100px;
+    }
+    i:hover {
+      cursor: pointer;
+    }
+  }
+  div {
+    width: 185px;
+    height: 50px;
+    line-height: 50px;
+    text-decoration: none;
+    color: #565555;
+    margin: 5px 0;
+    padding-left: 15px;
+    font-size: 18px;
+  }
+  i {
+    font-size: 18px;
+  }
+  div:hover {
+    cursor: pointer;
+    background-color: rgb(199, 195, 199);
+  }
 }
 
 .footer {
@@ -179,45 +251,84 @@ nav {
   height: 54px;
   background-color: #ffffff;
   bottom: 0px;
-  border-top: 1px solid #f6f1f1;
+  border-top: 1px solid #eee7e7;
   display: flex;
+  justify-content: space-between;
 }
 
 .playHurdle_left {
+  width: 200px;
   display: flex;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 3px;
-      margin: 0 6px 0 0;
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+    margin: 0 6px 0 0;
   }
+
   .playHurdle_left_right {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     font-size: 14px;
+    span {
+      width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      i:hover {
+        cursor: pointer;
+      }
+    }
   }
+
   i {
     margin: 0 0 0 6px;
   }
 }
 
 .playHurdle_centre {
-  position: relative;
-  left: 50%;
-  width: 200px;
-  height: 500px;
-  .yuan {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    background-color: #a75858;
-    border-radius: 50%;
+  width: 400px;
+  height: 100%;
+
+  .optIcon {
+    margin: 6px 0 0 0;
+
+    i {
+      font-size: 22px;
+      margin: 0 39px;
+    }
+
+    i:hover {
+      cursor: pointer;
+    }
   }
-  i {
-    font-size: 22px;
-    margin: 0 10px;
+
+  .progressBar {
+    margin: 12px 0 0 0;
+    display: block;
+    width: 400px;
+    height: 3px;
+    background-color: #bab6b6;
+    border-radius: 2px;
   }
 }
 
+.playHurdle_right {
+  width: 200px;
+  height: 55px;
+
+  span {
+    i {
+      margin: 10px 0 0 0;
+      float: right;
+      font-size: 20px;
+    }
+
+    i:hover {
+      cursor: pointer;
+    }
+  }
+}
 </style>
