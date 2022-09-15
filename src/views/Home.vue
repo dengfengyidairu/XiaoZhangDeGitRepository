@@ -40,7 +40,7 @@
           <i class="iconfont icon-shuzishunxu"></i>
           <i class="iconfont icon-shangyishou"></i>
           <i @click="playCliclFn" :class=" flag ?  'iconfont icon-bofang' : 'iconfont icon-24gf-pause2' "></i>
-          <i class="iconfont icon-xiayishou"></i>
+          <i @click="nextTrackFn" class="iconfont icon-xiayishou"></i>
         </div>
         <div class="progressBar"></div>
       </div>
@@ -61,7 +61,8 @@ import Login from '@/views/login/Login.vue'
 export default {
   data() {
     return {
-      flag: true
+      flag: true,
+      index: 0
     }
   },
   methods: {
@@ -90,6 +91,9 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    // 下一首
+    nextTrackFn () {
       
     }
   },
@@ -97,14 +101,16 @@ export default {
     Login
   },
   mounted(){
-          // 绑定事件
-          this.$bus.$on('playBus', ()=>{
-            setTimeout (()=>{
-              this.playFn()
-              console.log(this.$store.state.musicMsg)
-            },500)
-          })
-        },
+      // 绑定事件
+      this.$bus.$on('playBus', (data)=>{
+        // 把当前歌曲在歌单所有歌曲里的索引值赋值给index
+        this.index = data
+        console.log(this.index)
+        setTimeout (()=>{
+          this.playFn()
+        },500)
+    })
+  },
 }
 </script>
 

@@ -71,17 +71,15 @@ export default {
         ...mapActions(['getSongDetailss', 'getSongMsg','getSongUrl']),
         // 双击播放歌曲
         playSongFn (id, index) {
-            // console.log(id)
             this.getSongUrl(id)
-            this.$bus.$emit('playBus')
+            this.$bus.$emit('playBus',index)
             this.alterMusicMsg(this.$store.state.songMsg[index])
-            // console.log(this.$store.state.songMsg[index])
         }
     },
     created() {
         this.getSongDetailss(this.$route.query.id)
         this.getSongMsg(this.$route.query.id)
-    },
+    }
 }
 </script>
 
