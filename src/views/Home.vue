@@ -42,9 +42,16 @@
           <i @click="playCliclFn" :class=" flag ?  'iconfont icon-bofang' : 'iconfont icon-24gf-pause2' "></i>
           <i @click="nextTrackFn" class="iconfont icon-xiayishou"></i>
         </div>
-        <div class="progressBar"></div>
+        <!-- 进度条 -->
+        <div class="progress_mod">
+          <span>00:00</span>
+          <div ref="runfatbar" class="progressBar">
+            <div ref="runbar" class="progress_in"></div>
+          </div>
+          <span>00:00</span>
+        </div>
       </div>
-      <!-- 进度条 -->
+      <!-- 右侧图标 -->
       <div class="playHurdle_right">
         <span><i class="iconfont icon-danlieliebiao"></i></span>
       </div>
@@ -77,14 +84,14 @@ export default {
     // 点击播放按钮触发事件  切换图标 播放/暂停音乐
     playCliclFn() {
       this.flag = !this.flag
-      if ( this.flag) {
+      if (this.flag) {
         this.$refs.audioRef.pause();
       } else {
         this.$refs.audioRef.play();
-      } 
+      }
     },
     // 播放事件
-    playFn () {
+    playFn() {
       this.flag = false;
       try {
         this.$refs.audioRef.play();
@@ -93,22 +100,27 @@ export default {
       }
     },
     // 下一首
-    nextTrackFn () {
-      
+    nextTrackFn() {
+
     }
   },
   components: {
     Login
   },
-  mounted(){
-      // 绑定事件
-      this.$bus.$on('playBus', (data)=>{
-        // 把当前歌曲在歌单所有歌曲里的索引值赋值给index
-        this.index = data
-        console.log(this.index)
-        setTimeout (()=>{
-          this.playFn()
-        },500)
+  mounted() {
+    const musicBar = this.$refs.runbar  // 颜色进度条所在对象
+    const musicWidth = this.$refs.runfatbar.offsetWidth // 底部进度条总宽
+    console.log(musicBar)
+    console.log(musicWidth)
+    // 绑定事件
+    this.$bus.$on('playBus', (data) => {
+      // 把当前歌曲在歌单所有歌曲里的索引值赋值给index
+      this.index = data
+      console.log(this.index)
+      // 定时器是因为获取歌曲URL，改变audio src是异步的
+      setTimeout(() => {
+        this.playFn()
+      }, 500)
     })
   },
 }
@@ -177,7 +189,8 @@ nav {
   position: absolute;
   border-right: 0.5px solid #e0dfdf;
   height: 638px;
-    a {
+
+  a {
     display: block;
     width: 185px;
     height: 50px;
@@ -188,6 +201,7 @@ nav {
     padding-left: 15px;
     font-size: 18px;
   }
+
   span {
     margin: 10px 0;
     display: inline-block;
@@ -197,13 +211,16 @@ nav {
     color: #afacac;
     background-color: #fafafa;
     padding-left: 15px;
+
     i {
       margin: 0 0 0 100px;
     }
+
     i:hover {
       cursor: pointer;
     }
   }
+
   div {
     width: 185px;
     height: 50px;
@@ -214,9 +231,11 @@ nav {
     padding-left: 15px;
     font-size: 18px;
   }
+
   i {
     font-size: 18px;
   }
+
   div:hover {
     cursor: pointer;
     background-color: rgb(199, 195, 199);
@@ -252,11 +271,11 @@ nav {
 }
 
 .playHurdle {
-  position: fixed;
+  position: absolute;
   width: 1260px;
   height: 54px;
   background-color: #ffffff;
-  bottom: 0px;
+  top: 705px;
   border-top: 1px solid #eee7e7;
   display: flex;
   justify-content: space-between;
@@ -278,11 +297,13 @@ nav {
     flex-direction: column;
     justify-content: space-around;
     font-size: 14px;
+
     span {
       width: 120px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+
       i:hover {
         cursor: pointer;
       }
@@ -295,15 +316,15 @@ nav {
 }
 
 .playHurdle_centre {
-  width: 400px;
+  width: 471px;
   height: 100%;
 
   .optIcon {
     margin: 6px 0 0 0;
-
+    display: flex;
+    justify-content: space-around;
     i {
       font-size: 22px;
-      margin: 0 39px;
     }
 
     i:hover {
@@ -311,13 +332,33 @@ nav {
     }
   }
 
-  .progressBar {
-    margin: 12px 0 0 0;
-    display: block;
-    width: 400px;
-    height: 3px;
-    background-color: #bab6b6;
-    border-radius: 2px;
+  .progress_mod {
+    display: flex;
+
+    span {
+      display: inline-block;
+      font-size: 6px;
+      color: #c7c1c1;
+      margin: 5px 2px 0 2px;
+    }
+    .progressBar {
+      display: inline-block;
+      margin: 12px 0 0 0;
+      width: 400px;
+      height: 3px;
+      background-color: #bab6b6;
+      border-radius: 2px;
+
+      .progress_in {
+        display: inline-block;
+        width: 200px;
+        height: 3px;
+        border-radius: 2px;
+        background: rgb(225, 89, 65);
+        background-position: center right;
+        position: absolute;
+      }
+    }
   }
 }
 
