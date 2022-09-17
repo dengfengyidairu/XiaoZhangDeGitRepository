@@ -71,12 +71,16 @@ export default {
         ...mapActions(['getSongDetailss', 'getSongMsg','getSongUrl']),
         // 双击播放歌曲
         playSongFn (id, index) {
+            // 获取歌曲的url
             this.getSongUrl(id)
+            // 全局事件总线，调用兄弟组件的函数
             this.$bus.$emit('playBus',index)
+            // 改变左下角的歌曲，歌手名字，歌曲图片
             this.alterMusicMsg(this.$store.state.songMsg[index])
         }
     },
     created() {
+        // 调用映射过来的store actions函数，传入路由传递过来的query参数
         this.getSongDetailss(this.$route.query.id)
         this.getSongMsg(this.$route.query.id)
     }

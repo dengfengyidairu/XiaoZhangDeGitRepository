@@ -38,7 +38,7 @@
       <div class="playHurdle_centre">
         <div class="optIcon">
           <i class="iconfont icon-shuzishunxu"></i>
-          <i class="iconfont icon-shangyishou"></i>
+          <i @click="previousFn" class="iconfont icon-shangyishou"></i>
           <i @click="playCliclFn" :class=" flag ?  'iconfont icon-bofang' : 'iconfont icon-24gf-pause2' "></i>
           <i @click="nextTrackFn" class="iconfont icon-xiayishou"></i>
         </div>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+  import { mapActions, mapMutations } from 'vuex'
 import Login from '@/views/login/Login.vue'
 export default {
   data() {
@@ -73,6 +74,10 @@ export default {
     }
   },
   methods: {
+     // 映射
+    ...mapMutations(['alterMusicMsg']),
+    ...mapActions(['getSongUrl']),
+
     // 判定hash确实是否点击
     // getyuansu(e) {
     //   this.aaa = e.target.hash
@@ -99,9 +104,44 @@ export default {
         console.log(error)
       }
     },
+
+    // 上一首
+    previousFn () {
+      this.flag = false;
+      // 在当前播放歌曲的索引值上加一
+      if ( this.index == 0 ) {
+        this.index = this.$store.state.len-1
+        // 获取下一首歌的url
+        this.getSongUrl(this.$store.state.songMsg[this.index].id)
+        // 获取歌曲，歌手的名字，歌曲封面
+        this.alterMusicMsg(this.$store.state.songMsg[this.index])
+        // 播放歌曲
+        this.$refs.audioRef.play();
+      } else {
+        this.index -= 1
+        this.getSongUrl(this.$store.state.songMsg[this.index].id)
+        this.alterMusicMsg(this.$store.state.songMsg[this.index])
+        this.$refs.audioRef.play();
+      }
+    },
     // 下一首
     nextTrackFn() {
-
+      this.flag = false;
+      // 在当前播放歌曲的索引值上加一
+      if ( this.index == this.$store.state.len-1) {
+        this.index = 0
+        // 获取下一首歌的url
+        this.getSongUrl(this.$store.state.songMsg[this.index].id)
+        // 获取歌曲，歌手的名字，歌曲封面
+        this.alterMusicMsg(this.$store.state.songMsg[this.index])
+        // 播放歌曲
+        this.$refs.audioRef.play();
+      } else {
+        this.index += 1
+        this.getSongUrl(this.$store.state.songMsg[this.index].id)
+        this.alterMusicMsg(this.$store.state.songMsg[this.index])
+        this.$refs.audioRef.play();
+      }
     }
   },
   components: {
@@ -116,7 +156,6 @@ export default {
     this.$bus.$on('playBus', (data) => {
       // 把当前歌曲在歌单所有歌曲里的索引值赋值给index
       this.index = data
-      console.log(this.index)
       // 定时器是因为获取歌曲URL，改变audio src是异步的
       setTimeout(() => {
         this.playFn()
@@ -275,7 +314,7 @@ nav {
   width: 1260px;
   height: 54px;
   background-color: #ffffff;
-  top: 705px;
+  top: 690px;
   border-top: 1px solid #eee7e7;
   display: flex;
   justify-content: space-between;
