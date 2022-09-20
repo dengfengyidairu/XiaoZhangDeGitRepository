@@ -11,7 +11,7 @@
                     <span class="creator_time">{{$store.state.songDetaData.trackNumberUpdateTime | dateFormat}}创建</span>
                 </div>
                 <div class="song_operate">
-                    <span class="operate_left"><i class="iconfont icon-bofang"></i>播放全部</span>
+                    <span class="operate_left" @click="playAll"><i class="iconfont icon-bofang"></i>播放全部</span>
                     <span class="operate_right"><i class="iconfont icon-jiahao"></i></span>
                 </div>
                 <div class="tags">
@@ -69,6 +69,10 @@ export default {
         // 映射
         ...mapMutations(['alterMusicMsg']),
         ...mapActions(['getSongDetailss', 'getSongMsg','getSongUrl']),
+        // 点击播放全部
+        playAll () {
+
+        },
         // 双击播放歌曲
         playSongFn (id, index) {
             // 获取歌曲的url

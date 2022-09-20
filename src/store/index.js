@@ -40,12 +40,14 @@ const state = {
   songUrl: '',
   // 歌曲详情
   musicDetail: [],
-  // 歌单歌曲详情(头像，专辑，歌手)
+  // 歌单歌曲详情(头像，专辑，歌手) / 默认数据
   musicMsg: {
     name:'',
     ar: [{name: ''}],
     al: {picUrl: 'https://p1.music.126.net/mn87wsSRthixX1js26p6aQ==/109951167796790770.jpg'}
-  }
+  },
+  // // 歌曲时间
+  // musicTime: []
 }
 
 // 准备mutations对象——修改state中的数据
