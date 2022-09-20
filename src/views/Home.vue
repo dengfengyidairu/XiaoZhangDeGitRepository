@@ -105,13 +105,11 @@ export default {
     setPlayTime() {
       const music = this.$refs.audioRef
       const musicBar = this.$refs.runbar  // 颜色进度条所在对象
-      const musicWidth = this.$refs.runfatbar.offsetWidth // 底部进度条总宽
       // 开始播放时 根据已播放时长改变颜色进度条 改变已播放时间
       music.addEventListener('timeupdate', () => {
         const musicTime = music.duration // 获得音频时长
         const stopTime = music.currentTime // 获得已播放的音频时长
-        // musicBar.style.width = `${(stopTime / musicTime) * 31.747}%`
-        musicBar.style.width = stopTime / musicTime * musicWidth / 4 + '%'
+        musicBar.style.width = `${(stopTime / musicTime) * 100}%`
         const branch = Math.floor(stopTime / 60) // 计算已播放的音频分钟
         const second = Math.floor(stopTime % 60) // 计算已播放的音频秒
         if (branch < 10 && second < 10) { // 四种情况判断显示音频已播放时间
@@ -143,6 +141,10 @@ export default {
         // 把音乐总时间赋值显示
         this.$refs.entTime.innerHTML = this.dTime
         this.playFn()
+        // 歌曲播放完成之后自动播放下一首
+        music.addEventListener('ended', () => {
+          this.nextTrackFn()
+        })
       })
     },
     // 上一首
