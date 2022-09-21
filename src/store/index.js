@@ -115,7 +115,7 @@ const mutations = {
   },
   // 推荐视频
   alterRecommendVideo(state, val) {
-    state.recommendVideo = JSON.parse(JSON.stringify(val))
+    state.recommendVideo = val
   },
   // 最新MV
   alterNewestMv(state, val) {
@@ -178,7 +178,7 @@ const actions = {
   // 推荐视频
   async getRmdVideo(store) {
     const res = await recommendVideoAPI()
-    store.commit('alterRecommendVideo', JSON.parse(JSON.stringify(res.datas)))
+    store.commit('alterRecommendVideo',res.datas)
   },
   // 最新MV
   async getNewestMv(store) {

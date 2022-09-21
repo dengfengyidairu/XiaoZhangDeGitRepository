@@ -10,7 +10,7 @@ const myMusicRequest = axios.create({
     /*headers: {
       // 'Content-Type': 'application/json; charset=utf-8'
     },*/
-    withCredentials: true
+    withCredentials: true,
 })
 // 响应拦截器
 myMusicRequest.interceptors.response.use(

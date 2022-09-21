@@ -22,9 +22,7 @@
             ...mapActions(['getRmdVideo']),
         },
         mounted () {
-            setTimeout(() => {
                 this.getRmdVideo()
-            }, 0);
         } 
     }
 </script>

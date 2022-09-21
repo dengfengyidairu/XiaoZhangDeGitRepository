@@ -22,7 +22,6 @@
     },
     mounted () {
       this.getNewestMv()
-      console.log(this.$store.state.newestMv)
     }
   }
 </script>
@@ -31,12 +30,11 @@
   * {
       padding: 0;
       margin: 0;
+      list-style: none;
   }
   .outermost_layer {
-      margin: 0 0 50px 0;
   }
   ul {
-      list-style: none;
       li {
           width: 300px;
           height: 200px;
@@ -47,6 +45,9 @@
               width: 300px;
               height: 169px;
               border-radius: 8px;
+          }
+          img:hover {
+            cursor: pointer;
           }
           span {
               display: inline-block;
